@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>TODO write content</div>
+
+        <form method="POST" action="api/student/save">
+            <div>
+                <label>First name</label>
+                <input type="text" name="first_name"/>
+            </div>
+            <div>
+                <label>Last name</label>
+                <input type="text" name="last_name"/>
+            </div>
+            <div>
+                <label>Email</label>
+                <input type="email" name="email"/>
+            </div>
+            <div>
+                <label>Status</label>
+                <Label><input type="radio" value="1" name="status"/>Active</label>
+                <Label><input type="radio" value="0" name="status"/>Inactive</label>
+            </div>
+            <input type="hidden" name="id" value=""/>
+            <input type="submit" value="Save"/>
+        </form>
+
+    </body>
+</html>
