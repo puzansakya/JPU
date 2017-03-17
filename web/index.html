@@ -9,31 +9,85 @@ and open the template in the editor.
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="assets/js/libs/jquery.min.js" type="text/javascript"></script>
     </head>
-    <body>
+    <body onload="get()">
         <div>TODO write content</div>
+        <div>
+            <form id="student-form">
+                <div>
+                    <label>First name</label>
+                    <input type="text" name="first_name"/>
+                </div>
+                <div>
+                    <label>Last name</label>
+                    <input type="text" name="last_name"/>
+                </div>
+                <div>
+                    <label>Email</label>
+                    <input type="email" name="email"/>
+                </div>
+                <div>
+                    <label>Status</label>
+                    <Label><input type="radio" value="1" name="status"/>Active</label>
+                    <Label><input type="radio" value="0" name="status"/>Inactive</label>
+                </div>
+                <input type="hidden" name="id" value=""/>
+                <input type="submit" id="btn-save" value="Save"/>
+            </form>
+        </div>
+        <br>
 
-        <form method="POST" action="api/student/save">
-            <div>
-                <label>First name</label>
-                <input type="text" name="first_name"/>
-            </div>
-            <div>
-                <label>Last name</label>
-                <input type="text" name="last_name"/>
-            </div>
-            <div>
-                <label>Email</label>
-                <input type="email" name="email"/>
-            </div>
-            <div>
-                <label>Status</label>
-                <Label><input type="radio" value="1" name="status"/>Active</label>
-                <Label><input type="radio" value="0" name="status"/>Inactive</label>
-            </div>
-            <input type="hidden" name="id" value=""/>
-            <input type="submit" value="Save"/>
-        </form>
+        <input type="submit" id="btn-getData" value="Get data"/>
+        <div id="content"></div>
+
+        <script>
+            $(document).on("ready", function () {
+                $("#btn-save").on("click", function () {
+
+                    $.post("api/student/save", $("#student-form").serialize(), function (data) {
+                        get();
+                        $("#student-form")[0].reset();
+                    });
+                    return false;
+                });
+
+
+                $("#btn-getData").on("click", function () {
+                    $("#content").html("<h1>Loading...</h1>");
+                    var content = "<table><tr><th>Name</th><th>email</th></tr>";
+                    $.getJSON("api/student", function (data) {
+                        $.each(data, function (i, o) {
+                            content += "<tr><td>" + o.firstName + " " + o.lastName + "</td>";
+                            content += "<td>" + o.email + "</td></tr>";
+                        });
+                        content += "</table>";
+                        $("#content").html(content);
+                    });
+
+                });
+
+
+            });
+
+            function get() {
+                $("#content").html("<h1>Loading...</h1>");
+                var content = "<table><tr><th>Name</th><th>email</th></tr>";
+                $.getJSON("api/student", function (data) {
+                    $.each(data, function (i, o) {
+                        content += "<tr><td>" + o.firstName + " " + o.lastName + "</td>";
+                        content += "<td>" + o.email + "</td></tr>";
+                    });
+                    content += "</table>";
+                    $("#content").html(content);
+                });
+
+            }
+
+
+        </script>
 
     </body>
+
+
 </html>
